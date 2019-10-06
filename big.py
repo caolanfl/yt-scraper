@@ -1,9 +1,10 @@
-import requests, json, re, threading, time
+import requests, json, ChannelFinder, re, threading, time
+from ChannelFinder import *
+from bs4 import BeautifulSoup
 
 filename = input('Playlist list : ')
 f = open(filename, 'r')
 playlists = f.readlines()
-f.close()
 
 videos = []
 def get_videos(playlist_url):
@@ -34,9 +35,9 @@ threads = []
 while True:
     threads = [t for t in threads if t.is_alive()]
 
-    if len(threads) < 500 and i<len(playlists):
+    if len(threads) < 100 and i<len(playlists):
         URL = playlists[i]
-        if i%20 == 0:
+        if i%100 == 0:
             print(i, len(playlists))
         thread = threading.Thread(target=get_videos, args=(URL,))
         threads.append(thread)
@@ -46,13 +47,7 @@ while True:
 
     # Break when all threads are finished
     flag = False
-    if i == len(playlists):
-        flag = True
-        for t in threads:
-            if t.is_alive():
-                flag = False
-                break
-    if flag:
+    if i == len(playlists) and len(threads) == 0:
         break
 
 i = 0
@@ -60,9 +55,9 @@ threads = []
 while True:
     threads = [t for t in threads if t.is_alive()]
 
-    if len(threads) < 500 and i<len(videos):
+    if len(threads) < 100 and i<len(videos):
         URL = 'https://youtube.com'+videos[i]
-        if i%20 == 0:
+        if i%100 == 0:
             print(i, len(videos))
         thread = threading.Thread(target=scrape, args=(URL,))
         threads.append(thread)
@@ -71,17 +66,10 @@ while True:
         i += 1
 
     # Break when all threads are finished
-    flag = False
-    if i == len(videos):
-        flag = True
-        for t in threads:
-            if t.is_alive():
-                flag = False
-                break
-    if flag:
+    if i == len(videos) and len(threads) == 0:
         break
 
-text_file = open(filename+"fsd.txt", "w")
+text_file = open(keyword+"fsd.txt", "w")
 for email in emails:
     text_file.write(email[0]+';'+email[1]+'\n')
 text_file.close()
