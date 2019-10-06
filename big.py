@@ -33,7 +33,7 @@ threads = []
 while True:
     threads = [t for t in threads if t.is_alive()]
 
-    if len(threads) < 100 and i<len(playlists):
+    if len(threads) < 500 and i<len(playlists):
         URL = playlists[i]
         if i%20 == 0:
             print(i, len(playlists))
@@ -59,7 +59,7 @@ threads = []
 while True:
     threads = [t for t in threads if t.is_alive()]
 
-    if len(threads) < 100 and i<len(videos):
+    if len(threads) < 500 and i<len(videos):
         URL = 'https://youtube.com'+videos[i]
         if i%20 == 0:
             print(i, len(videos))
