@@ -1,5 +1,4 @@
-import requests, json, ChannelFinder, re, threading, time
-from ChannelFinder import *
+import requests, json, re, threading, time
 from bs4 import BeautifulSoup
 
 filename = input('Playlist list : ')
