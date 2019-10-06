@@ -3,6 +3,7 @@ import requests, json, re, threading, time
 filename = input('Playlist list : ')
 f = open(filename, 'r')
 playlists = f.readlines()
+f.close()
 
 videos = []
 def get_videos(playlist_url):
@@ -80,7 +81,7 @@ while True:
     if flag:
         break
 
-text_file = open(keyword+"fsd.txt", "w")
+text_file = open("fsd.txt", "w")
 for email in emails:
     text_file.write(email[0]+';'+email[1]+'\n')
 text_file.close()
